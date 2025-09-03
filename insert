@@ -1,0 +1,1 @@
+INSERT INTO calsdv2."Ring" ("RingName") VALUES ("david");
