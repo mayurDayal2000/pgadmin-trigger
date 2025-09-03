@@ -1,5 +1,5 @@
 -- Creates the main trigger function.
-CREATE OR REPLACE FUNCTION public.log_trigger_function()
+CREATE OR REPLACE FUNCTION calsdv2.log_trigger_function()
 RETURNS TRIGGER AS $$
 DECLARE
     pk_columns TEXT[];
@@ -35,15 +35,15 @@ BEGIN
 
     -- Insert the audit data into the log table.
     IF (TG_OP = 'INSERT') THEN
-        INSERT INTO public.audit_logger(table_name, primary_key, operation, changes, before_change, user_name, changed_at)
+        INSERT INTO calsdv2.AuditLog(table_name, primary_key, operation, changes, before_change, user_name, changed_at)
         VALUES (TG_TABLE_NAME, pk_values_jsonb, TG_OP, to_jsonb(NEW), NULL, session_user, now());
 
     ELSIF (TG_OP = 'UPDATE') THEN
-        INSERT INTO public.audit_logger(table_name, primary_key, operation, changes, before_change, user_name, changed_at)
-        VALUES (TG_TABLE_NAME, pk_values_jsonb, TG_OP, public.jsonb_diff_vals(to_jsonb(OLD), to_jsonb(NEW)), to_jsonb(OLD), session_user, now());
+        INSERT INTO calsdv2.AuditLog(table_name, primary_key, operation, changes, before_change, user_name, changed_at)
+        VALUES (TG_TABLE_NAME, pk_values_jsonb, TG_OP, calsdv2.jsonb_diff_vals(to_jsonb(OLD), to_jsonb(NEW)), to_jsonb(OLD), session_user, now());
 
     ELSIF (TG_OP = 'DELETE') THEN
-        INSERT INTO public.audit_logger(table_name, primary_key, operation, changes, before_change, user_name, changed_at)
+        INSERT INTO calsdv2.AuditLog(table_name, primary_key, operation, changes, before_change, user_name, changed_at)
         VALUES (TG_TABLE_NAME, pk_values_jsonb, TG_OP, NULL, to_jsonb(OLD), session_user, now());
     END IF;
 
