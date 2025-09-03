@@ -17,14 +17,14 @@ $$ LANGUAGE plpgsql;
 
 
 -- Define the table that will store every change record
-DROP TABLE IF EXISTS calsdv2.AuditLog;
+-- DROP TABLE IF EXISTS calsdv2.AuditLog;
 CREATE TABLE calsdv2.AuditLog (
-    audit_id      BIGSERIAL PRIMARY KEY,
-    table_name    VARCHAR(255) NOT NULL,
-    primary_key   JSONB,
-    operation     VARCHAR(10) NOT NULL CHECK (operation IN ('INSERT', 'UPDATE', 'DELETE')),
-    changes       JSONB,
-    before_change JSONB,
-    user_name     VARCHAR(255) NOT NULL DEFAULT session_user,
-    changed_at    TIMESTAMP NOT NULL DEFAULT now()
+    AuditId      BIGSERIAL PRIMARY KEY,
+    TableName    VARCHAR(255) NOT NULL,
+    PrimaryKey   JSONB,
+    Operation     VARCHAR(10) NOT NULL CHECK (operation IN ('INSERT', 'UPDATE', 'DELETE')),
+    Changes       JSONB,
+    BeforeChange JSONB,
+    UserName     VARCHAR(255) NOT NULL DEFAULT session_user,
+    ChangedAt    TIMESTAMP NOT NULL DEFAULT now()
 );
