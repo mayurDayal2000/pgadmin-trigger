@@ -1,15 +1,8 @@
-ERROR: column "table_name" of relation "AuditLog" does not exist
-
+ERROR:  column "table_name" of relation "AuditLog" does not exist
 LINE 1: INSERT INTO calsdv2."AuditLog"(table_name, primarykey, opera...
-
-^
-
-QUERY: INSERT INTO calsdv2."AuditLog"(table_name, primarykey, operation, changes, beforechange, username, changedat)
-
-VALUES (TG_TABLE_NAME, pk_values_jsonb, TG_OP, to_jsonb(NEW), NULL, session_user, now())
-
-CONTEXT: PL/pgSQL function log_trigger_function() line 36 at SQL statement
-
-
+                                       ^
+QUERY:  INSERT INTO calsdv2."AuditLog"(table_name, primarykey, operation, changes, beforechange, username, changedat)
+        VALUES (TG_TABLE_NAME, pk_values_jsonb, TG_OP, to_jsonb(NEW), NULL, session_user, now())
+CONTEXT:  PL/pgSQL function log_trigger_function() line 36 at SQL statement 
 
 SQL state: 42703
