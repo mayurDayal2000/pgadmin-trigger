@@ -35,15 +35,15 @@ BEGIN
 
     -- Insert the audit data into the log table.
     IF (TG_OP = 'INSERT') THEN
-        INSERT INTO calsdv2.AuditLog(table_name, primary_key, operation, changes, before_change, user_name, changed_at)
+        INSERT INTO calsdv2.AuditLog(table_name, primarykey, operation, changes, beforechange, username, changedat)
         VALUES (TG_TABLE_NAME, pk_values_jsonb, TG_OP, to_jsonb(NEW), NULL, session_user, now());
 
     ELSIF (TG_OP = 'UPDATE') THEN
-        INSERT INTO calsdv2.AuditLog(table_name, primary_key, operation, changes, before_change, user_name, changed_at)
+        INSERT INTO calsdv2.AuditLog(table_name, primarykey, operation, changes, beforechange, username, changedat)
         VALUES (TG_TABLE_NAME, pk_values_jsonb, TG_OP, calsdv2.jsonb_diff_vals(to_jsonb(OLD), to_jsonb(NEW)), to_jsonb(OLD), session_user, now());
 
     ELSIF (TG_OP = 'DELETE') THEN
-        INSERT INTO calsdv2.AuditLog(table_name, primary_key, operation, changes, before_change, user_name, changed_at)
+        INSERT INTO calsdv2.AuditLog(table_name, primarykey, operation, changes, beforechange, username, changedat)
         VALUES (TG_TABLE_NAME, pk_values_jsonb, TG_OP, NULL, to_jsonb(OLD), session_user, now());
     END IF;
 
